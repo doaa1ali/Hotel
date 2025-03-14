@@ -317,15 +317,17 @@ const Table = () => {
               }}
             >
               <Avatar alt={`image${index + 1}`} src={image} sx={{ width: 73, height: 73, border: "none" }} />
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <Typography variant="h6" sx={{ fontFamily: "Poppins", fontWeight: "500", color: "#182775" }}>
-                  Client Name
-                </Typography>
-                <Box sx={{ color: "#666", fontSize: "14px", lineHeight: "1.2", fontWeight: "275" }}>
-                  <Typography>Unit Number: 023</Typography>
-                  <Typography>Rent Type: Monthly</Typography>
+                <Box sx={{ display: "flex", flexDirection: "column" }}>
+                    <Typography variant="h6" sx={{ fontFamily: "Poppins", fontWeight: "500", color:"#182775" }}>
+                        Client Name
+                    </Typography>
+                    <Box sx={{
+                        color: "#666",
+                            fontSize: "14px", lineHeight: "0.2", fontWeight: "275" }}>
+                        <p>Unit Number: 023</p>
+                        <p>Rent Type: Monthly</p>
+                    </Box>
                 </Box>
-              </Box>
             </Box>
           ))}
         </Box>

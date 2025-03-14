@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { styled, useTheme } from '@mui/material/styles';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -12,12 +11,15 @@ import { BarChartOutlined } from '@mui/icons-material';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 import Groups2Icon from '@mui/icons-material/Groups2';
 import { useNavigate } from 'react-router-dom';
-
+import { Box} from "@mui/material";
 import passwordCheck from "../assets/images/passwordCheck.png";
 import box from "../assets/images/box.png"; 
+import boxactive from "../assets/images/boxactive.png"; 
 import star from "../assets/images/star.png"; 
+import staractive from "../assets/images/staractive.png"; 
+import helpactive from "../assets/images/helpactive.png"; 
 import messagetext from "../assets/images/messagetext.png"; 
-import activeVectorIcon from "../assets/images/Vector-Active.png"; 
+import activeVectorIcon from "../assets/images/apartactive.png"; 
 import defaultVectorIcon from "../assets/images/Vector.png"; 
 
 const drawerWidth = 112;
@@ -44,31 +46,31 @@ export default function SideBar() {
         },
         { 
            "icon": (
-              <div style={{ 
-                  backgroundColor: selectedItem === "apartments-list" ? "#182775" : "transparent",  
-                  borderRadius: "50%",      
-                  width: selectedItem === "apartments-list" ? "38px" : "28px",    
-                  height: selectedItem === "apartments-list" ? "38px" : "28px",
-                  display: "flex",
-                  alignItems: "center",
+              <div 
+              style={{  
+                  paddingBottom: "10px",
+                  width: 28,    
+                  height: 28,     
+                  display: "flex", 
+                  alignItems: "center", 
                   justifyContent: "center",
-                  transition: "background-color 0.3s ease"
+                  cursor: "pointer"
               }}>
-                  <img 
-                      
-                    src={selectedItem === "apartments-list" ? activeVectorIcon : defaultVectorIcon} 
-                    alt="Vector Icon" 
-                    style={{ 
-                      width: selectedItem === "apartments-list" ? "20px" : "28px",    
-                      height: selectedItem === "apartments-list" ? "20px" : "28px",
-                    }} 
-                
-                  />
+                <img   
+                  src={selectedItem === "/dashboard/apartments-list" ? activeVectorIcon : defaultVectorIcon} 
+                  alt="Vector Icon" 
+                  style={{ 
+                    width: selectedItem === "/dashboard/apartments-list" ?  "40px" : "28px" ,    
+                    height: selectedItem === "/dashboard/apartments-list" ? "40px" : "28px",
+                  }} 
+              
+                />
               </div>
+              
           ),
 
 
-            "path": "apartments-list"
+            "path": "/dashboard/apartments-list"
         },
         { "icon": <PeopleAltOutlinedIcon style={{ color: "#475FD9" }} />, "path": "/PeopleProfile" },
         {
@@ -93,19 +95,32 @@ export default function SideBar() {
     const Array2 = [
         {
             "icon": (
-                <div style={{ 
-                    borderBottom: "3px solid #FF3333", 
+              <div 
+                style={{ 
+                    borderBottom: selectedItem === "/dashboard/help-center" ?  "none" : "3px solid #FF3333", 
                     paddingBottom: "10px",
                     width: 28,    
                     height: 28,     
                     display: "flex", 
                     alignItems: "center", 
                     justifyContent: "center",
-                }}>
-                    <LiveHelpIcon style={{ color: "#475FD9" }} />
-                </div>
+                    cursor: "pointer"
+                }} 
+                  onClick={() => setSelectedItem("/dashboard/help-center")} 
+              >
+                  {selectedItem === "/dashboard/help-center" ? (
+                      <img 
+                          src={helpactive}  
+                          alt="Help Icon Active"  
+                          style={{ width: "40px", height: "40px"}} 
+                      />
+                  ) : (
+                      <LiveHelpIcon style={{ color: "#475FD9" }} />
+                  )}
+              </div>
+          
             ),
-            "path": "/Help"
+            "path": "/dashboard/help-center"
         },
         {
             "icon": (
@@ -138,23 +153,51 @@ export default function SideBar() {
     const Array3 = [
         {
             "icon": (
+              <div 
+              style={{ 
+                  
+                  paddingBottom: "10px",
+                  width: 28,    
+                  height: 28,     
+                  display: "flex", 
+                  alignItems: "center", 
+                  justifyContent: "center",
+                  cursor: "pointer"
+              }}>
                 <img 
-                    src={box} 
+                    src={selectedItem === "/dashboard/inventory-list" ? boxactive : box} 
                     alt="box" 
-                    style={{ width: 24, height: 24 }}
+                    style={{ 
+                      width: selectedItem === "/dashboard/inventory-list" ? 40: 28, 
+                      height: selectedItem === "/dashboard/inventory-list" ? 40: 28 }}
                 />
+              </div>
             ),
-            "path": "/box"
+            "path": "/dashboard/inventory-list"
         },
         {
             "icon": (
+              <div 
+              style={{ 
+                  
+                  paddingBottom: "10px",
+                  width: 28,    
+                  height: 28,     
+                  display: "flex", 
+                  alignItems: "center", 
+                  justifyContent: "center",
+                  cursor: "pointer"
+              }}>
                 <img 
-                    src={star} 
+                    src={selectedItem === "/dashboard/reviews-apartments" ? staractive : star } 
                     alt="star" 
-                    style={{ width: 24, height: 24 }}
+                    style={{ 
+                      width: selectedItem === "/dashboard/reviews-apartments" ? 40: 28, 
+                      height: selectedItem === "/dashboard/reviews-apartments" ? 40: 28 }}
                 />
+              </div>
             ),
-            "path": "/star"
+            "path": "/dashboard/reviews-apartments"
         },
         {
             "icon": (
@@ -169,7 +212,7 @@ export default function SideBar() {
                     />
                 </div>
             ),
-            "path": "/messagetext"
+            "path": "/dashboard/chat"
         }
     ];
 

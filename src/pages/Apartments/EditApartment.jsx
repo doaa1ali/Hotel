@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useDropzone } from "react-dropzone";
 import { Box, Avatar, TextField, MenuItem, Button, Typography,InputAdornment, Divider, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import ImageIcon from "@mui/icons-material/Image";
+import { Close } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import image1 from "../../assets/images/image1.png";
 import image2 from "../../assets/images/image2.png";
@@ -37,7 +38,7 @@ const Table = () => {
       {/* العنوان والوصف */}
       <Box sx={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "16px" }}>
         <Typography variant="h4" sx={{ fontFamily: "Poppins", fontWeight: "bold" }}>
-          Edit - Units
+          Edit - Apartments
         </Typography>
         <Typography variant="body1" sx={{ color: "#666" }}>
           Fill in the data to edit an apartment.
@@ -198,8 +199,6 @@ const Table = () => {
                                     sx={{
                                         width: "124px",
                                         height: "90px",
-                                        borderRadius: "8px",
-                                        border: "1px dashed #aaa",
                                         display: "flex",
                                         alignItems: "center",
                                         justifyContent: "center",
@@ -233,22 +232,22 @@ const Table = () => {
                 <Button 
                     variant="contained" 
                     sx={{ backgroundColor: "#182775", "&:hover": { backgroundColor: "#121E5B" }, textTransform: "none" }}
+                    onClick={() => navigate("/dashboard/apartments-list")}
                 >
                     Save
                 </Button>
                 <Button 
                     variant="outlined"
                     sx={{ color: "#182775", textTransform: "none" }}
-                    onClick={() => navigate("/dashboard/units-list")}
+                    onClick={() => navigate("/dashboard/apartments-list")}
                 >
                     Cancel
                 </Button>
             </Box>
-
         </Box>
 
         {/* قائمة العملاء */}
-        <Box sx={{ flex: 1, padding: "20px", backgroundColor: "#fff", borderRadius: "11px", width: "350px" }}>
+        <Box sx={{ flex: 1,  backgroundColor: "#fff", borderRadius: "11px", width: "350px" }}>
           {[image1, image2, image3, image4, image5, image6 ].map((image, index) => (
             <Box
               key={index}
@@ -266,16 +265,27 @@ const Table = () => {
                 marginBottom: "15px",
               }}
             >
-              <Avatar alt={`image${index + 1}`} src={image} sx={{ width: 73, height: 73, border: "none" }} />
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <Typography variant="h6" sx={{ fontFamily: "Poppins", fontWeight: "500", color: "#182775" }}>
-                  Client Name
-                </Typography>
-                <Box sx={{ color: "#666", fontSize: "14px", lineHeight: "1.2", fontWeight: "275" }}>
-                  <Typography>Unit Number: 023</Typography>
-                  <Typography>Rent Type: Monthly</Typography>
+           <Box sx={{ position: "relative", display: "flex", gap: 2, width: "100%", p: 2, }}>
+                {/* أيقونة الإغلاق في الأعلى واليمين */}
+                <IconButton 
+                    sx={{ position: "absolute", top: 5, right: 5, color: "#182775" }} 
+                    onClick={() => console.log("Close button clicked")}
+                >
+                    <Close />
+                </IconButton>
+
+                <Avatar alt={`image${index + 1}`} src={image} sx={{ width: 73, height: 73, border: "none" }} />
+
+                <Box sx={{ display: "flex", flexDirection: "column" }}>
+                    <Typography variant="h6" sx={{ fontFamily: "Poppins", fontWeight: "500", lineHeight: "1", color: "#182775" }}>
+                        Client Name
+                    </Typography>
+                    <Box sx={{ color: "#182775", fontSize: "14px", lineHeight: "0.2", fontWeight: "275" }}>
+                        <p>Unit Number: 023</p>
+                        <p>Rent Type: Monthly</p>
+                    </Box>
                 </Box>
-              </Box>
+            </Box>
             </Box>
           ))}
         </Box>
@@ -285,6 +295,10 @@ const Table = () => {
 };
 
 export default Table;
+
+
+
+
 
 
 

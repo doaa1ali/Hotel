@@ -1,57 +1,37 @@
 import React, { useState } from 'react';
-import { useDropzone } from "react-dropzone";
 import { Box, Avatar, TextField, MenuItem, Button, Typography,InputAdornment, Divider, Grid } from "@mui/material";
+import { Person, Phone, Email, Badge, CreditCard } from "@mui/icons-material";
 import AddIcon from "@mui/icons-material/Add";
-import ImageIcon from "@mui/icons-material/Image";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import image1 from "../../assets/images/image1.png";
 import image2 from "../../assets/images/image2.png";
 import image3 from "../../assets/images/image3.png";
-import image4 from "../../assets/images/image4.png";
-import image5 from "../../assets/images/image5.png";
-import image6 from "../../assets/images/image6.png";
+import Edit_image1 from "../../assets/images/Edit_image1.png";
+import Edit_image2 from "../../assets/images/Edit_image2.png";
+import Edit_image3 from "../../assets/images/Edit_image3.png";
+import Edit_image4 from "../../assets/images/Edit_image4.png";
 import { useNavigate } from "react-router-dom";
 
 const Table = () => {
 
-    const [files, setFiles] = useState([]); // لتخزين الصور المرفوعة
-    const [uploadedImage, setUploadedImage] = useState(null); // الصورة الخاصة بحقل الرفع
-    const [isUploadReplaced, setIsUploadReplaced] = useState(false); // استبدال حقل الرفع
+    const [images, setImages] = useState ([Edit_image2, Edit_image3, Edit_image4]);
 
-    // عند رفع صورة من المستخدم
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
-        if (file) {
+        if (file && images.length < 4) { 
             const imageUrl = URL.createObjectURL(file);
-
-            if (files.length === 4) { 
-                setUploadedImage(imageUrl);
-                setIsUploadReplaced(true);
-            } else {
-                setFiles([...files, file]);
-            }
+            setImages((prevImages) => [...prevImages, imageUrl]); // إضافة الصورة الجديدة
         }
     };
 
+    const remainingSlots = 4 - images.length;
+    const [selectedIndex, setSelectedIndex] = useState(null);
 
-    // دالة السحب والإفلات
-    const { getRootProps, getInputProps } = useDropzone({
-        accept: "image/*",
-        multiple: true,
-        maxFiles: 5,
-        onDrop: (acceptedFiles) => {
-            const remainingSlots = 4 - files.length;
-            if (remainingSlots > 0) {
-                const newFiles = acceptedFiles.slice(0, remainingSlots);
-                setFiles((prevFiles) => [...prevFiles, ...newFiles]);
-            } else if (!isUploadReplaced && acceptedFiles.length > 0) {
-                setUploadedImage(URL.createObjectURL(acceptedFiles[0]));
-                setIsUploadReplaced(true);
-            }
-        },
-    });
-      
-
+    const clients = [
+      { image: image1 , name: "Client 1", unit: "023", rent: "Monthly" },
+      { image: image2, name: "Client 2", unit: "045", rent: "Yearly" },
+      { image: image3, name: "Client 3", unit: "078", rent: "Weekly" },
+    ];
     const navigate = useNavigate();
 
   return (
@@ -59,10 +39,10 @@ const Table = () => {
       {/* العنوان والوصف */}
       <Box sx={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "16px" }}>
         <Typography variant="h4" sx={{ fontFamily: "Poppins", fontWeight: "bold" }}>
-          Add - Apartments
+          Edit - Units
         </Typography>
         <Typography variant="body1" sx={{ color: "#666" }}>
-          Fill in the data to add an apartment.
+          Fill in the data to edit an apartment.
         </Typography>
       </Box>
 
@@ -73,18 +53,18 @@ const Table = () => {
             <Box sx={{ display: "flex", gap: "16px", marginBottom: "16px" }}>
                 <Box sx={{ flex: 1 , height: "50px"}}>
                 <Typography variant="subtitle1">Apartment</Typography>
-                <TextField fullWidth variant="outlined" />
+                <TextField fullWidth variant="outlined" placeholder="Name"/>
                 </Box>
                 <Box sx={{ flex: 1 }}>
                 <Typography variant="subtitle1">Building</Typography>
-                <TextField fullWidth variant="outlined" />
+                <TextField fullWidth variant="outlined" placeholder="Bulid No."/>
                 </Box>
             </Box>
 
             <Box sx={{ display: "flex", gap: "16px", marginBottom: "16px" }}>
                 <Box sx={{ flex: 1 }}>
                     <Typography variant="subtitle1">Area</Typography>
-                    <TextField fullWidth variant="outlined" />
+                    <TextField fullWidth variant="outlined" placeholder="Area x" />
                 </Box>
 
                 <Box sx={{ flex: 1 }}>
@@ -144,7 +124,7 @@ const Table = () => {
             </Box>
 
             <Box sx={{ display: "flex", alignItems: "center", gap: "16px", width:"600px" }}>
-            
+
                 <Box
                     sx={{display: "flex", alignItems: "center", padding: "20px", borderRadius: "5px", width: "200px", color: "#182775", height: "50px", backgroundColor: "#F6F8FA", fontWeight: "bold", gap: "12px", flex: 1,}}
                 > Total Salary: 5200 </Box>
@@ -168,40 +148,7 @@ const Table = () => {
             <Box sx={{ width: "100%", marginTop: "16px" }}>
                 <Box sx={{ display: "flex", alignItems: "center", gap: "20px", marginTop: "16px" }}>
                     
-                    {/* صندوق الرفع أو الصورة الخامسة */}
-                    {!isUploadReplaced ? (
-                        <Box
-                            sx={{
-                                width: "500px",
-                                height: "200px",
-                                border: "none",
-                                borderRadius: "8px",
-                                backgroundColor: "#F6F8FA",
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                textAlign: "center",
-                                flexShrink: 0,
-                                cursor: "pointer"
-                            }}
-                            onClick={() => document.getElementById("fileInput").click()}
-                        >
-                            <input 
-                                type="file" 
-                                id="fileInput" 
-                                accept="image/*" 
-                                style={{ display: "none" }} 
-                                onChange={handleImageUpload} 
-                            />
-                            <ImageIcon sx={{ fontSize: 40, color: "#182775" }} />
-                            <Typography sx={{ fontWeight: "bold", color: "#182775" }}>
-                                Upload Image
-                            </Typography>
-                            <Typography variant="caption">Click to upload</Typography>
-                        </Box>
-                    ) : (
-                        <Box
+                    <Box
                             sx={{
                                 width: "500px",
                                 height: "200px",
@@ -215,16 +162,14 @@ const Table = () => {
                             }}
                         >
                             <img
-                                src={uploadedImage}
-                                alt="Uploaded"
+                                src={Edit_image1}
+                                alt="Default Image 5"
                                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
                             />
                         </Box>
-                    )}
-
-                    {/* عرض الصور المرفوعة */}
+                    {/* عرض الصور الثابتة + حقل الرفع إذا كانت أقل من 4 */}
                     <Grid container spacing={2} sx={{ width: "270px", flexWrap: "wrap" }}>
-                        {files.map((file, index) => (
+                        {images.map((image, index) => (
                             <Grid item xs={6} key={index}>
                                 <Box
                                     sx={{
@@ -236,23 +181,22 @@ const Table = () => {
                                         display: "flex",
                                         alignItems: "center",
                                         justifyContent: "center",
-                                        backgroundColor: "#F6F8FA",
+                                        backgroundColor: "#F6F8FA"
                                     }}
                                 >
                                     <img
-                                        src={URL.createObjectURL(file)}
-                                        alt="uploaded"
+                                        src={image}
+                                        alt={`default-${index}`}
                                         style={{ width: "100%", height: "100%", objectFit: "cover" }}
                                     />
                                 </Box>
                             </Grid>
                         ))}
 
-                        {/* زر إضافة صورة جديدة */}
-                        {[...Array(4 - files.length)].map((_, index) => (
-                            <Grid item xs={6} key={index}>
+                        {/* عرض حقول الرفع إذا كان هناك أماكن فارغة */}
+                        {[...Array(remainingSlots)].map((_, index) => (
+                            <Grid item xs={6} key={`upload-${index}`}>
                                 <Box
-                                    onClick={() => document.querySelector("input[type='file']").click()}
                                     sx={{
                                         width: "124px",
                                         height: "90px",
@@ -263,71 +207,138 @@ const Table = () => {
                                         justifyContent: "center",
                                         cursor: "pointer",
                                         backgroundColor: "#F6F8FA",
+                                        position: "relative"
                                     }}
+                                    onClick={() => document.getElementById(`fileInput-${index}`).click()}
                                 >
+                                    <input 
+                                        type="file" 
+                                        id={`fileInput-${index}`} 
+                                        accept="image/*" 
+                                        style={{ display: "none" }} 
+                                        onChange={handleImageUpload} 
+                                    />
                                     <AddIcon sx={{ fontSize: 30, color: "#182775" }} />
                                 </Box>
                             </Grid>
-                        ))}
+                        ))}  
                     </Grid>
+
                 </Box>
+            </Box>
+            
 
+            <Divider sx={{ marginY: "16px" }} />
 
-
-                {/* خط فاصل */}
-                <Divider sx={{ marginY: "16px" }} />
-
-                {/* الأزرار */}
-                <Box sx={{ display: "flex", justifyContent: "flex-start", gap: "16px" }}>
-                    <Button 
-                        variant="contained" 
-                        sx={{ backgroundColor: "#182775", "&:hover": { backgroundColor: "#121E5B" }, textTransform: "none" }}
-                    >
-                        Add
-                    </Button>
-                    <Button 
-                        variant="outlined"
-                        sx={{ color: "#182775", textTransform: "none" }}
-                        onClick={() => navigate("/dashboard/apartments-list")}
-                    >
-                        Cancel
-                    </Button>
-                </Box>
+            {/* الأزرار */}
+            <Box sx={{ display: "flex", justifyContent: "flex-start", gap: "16px" }}>
+                <Button 
+                    variant="contained" 
+                    sx={{ backgroundColor: "#182775", "&:hover": { backgroundColor: "#121E5B" }, textTransform: "none" }}
+                >
+                    Save
+                </Button>
+                <Button 
+                    variant="outlined"
+                    sx={{ color: "#182775", textTransform: "none" }}
+                    onClick={() => navigate("/dashboard/units-list")}
+                >
+                    Cancel
+                </Button>
             </Box>
 
         </Box>
 
         {/* قائمة العملاء */}
         <Box sx={{ flex: 1, padding: "20px", backgroundColor: "#fff", borderRadius: "11px", width: "350px" }}>
-          {[image1, image2, image3, image4, image5, image6 ].map((image, index) => (
-            <Box
-              key={index}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                padding: "20px",
-                borderRadius: "5px",
-                width: "100%",
-                color: "#00CB22",
-                height: "105px",
-                backgroundColor: "#F6F8FA",
-                fontWeight: "bold",
-                gap: "12px",
-                marginBottom: "15px",
-              }}
-            >
-              <Avatar alt={`image${index + 1}`} src={image} sx={{ width: 73, height: 73, border: "none" }} />
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <Typography variant="h6" sx={{ fontFamily: "Poppins", fontWeight: "500", color: "#182775" }}>
-                  Client Name
-                </Typography>
-                <Box sx={{ color: "#666", fontSize: "14px", lineHeight: "1.2", fontWeight: "275" }}>
-                  <Typography>Unit Number: 023</Typography>
-                  <Typography>Rent Type: Monthly</Typography>
+            {clients.map((client, index) => (
+                <Box key={index}>
+                <Box
+                    onClick={() => setSelectedIndex(index === selectedIndex ? null : index)}
+                    sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    padding: "20px",
+                    borderRadius: "5px",
+                    width: "100%",
+                    height: "105px",
+                    backgroundColor: selectedIndex === index ? "#182775" : "#F6F8FA",
+                    color: selectedIndex === index ? "#FFFFFF" : "#182775",
+                    gap: "12px",
+                    marginBottom: "15px",
+                    cursor: "pointer",
+                    transition: "all 0.3s ease",
+                    }}
+                >
+                    <Avatar alt={client.name} src={client.image} sx={{ width: 73, height: 73, border: "none" }} />
+                    <Box sx={{ display: "flex", flexDirection: "column" }}>
+                        <Typography variant="h6" sx={{ fontFamily: "Poppins", fontWeight: "500" }}>
+                            Client Name
+                        </Typography>
+                        <Box sx={{
+                            color:selectedIndex === index ? "#FFFFFF" : "#666",
+                             fontSize: "14px", lineHeight: "0.2", fontWeight: "275" }}>
+                            <p>Unit Number: 023</p>
+                            <p>Rent Type: Monthly</p>
+                        </Box>
+                    </Box>
+
                 </Box>
-              </Box>
-            </Box>
-          ))}
+
+                {/* عرض الحقول عند الضغط */}
+                {selectedIndex === index && (
+                    <Box sx={{  backgroundColor: "#FFFFFF", borderRadius: "8px",  width:"100%" , marginBottom:"12px"}}>
+
+                        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "20px", marginBottom: "15px" , border: "1px solid #ccc",  borderRadius: "6px", padding:"10px", height:"50px"}}>
+                            {/* قسم Wallet */}
+                            <Box sx={{ textAlign: "center", paddingRight: "20px", borderRight: "2px solid #182775" }}>
+                                <Typography sx={{ fontSize: "20px", fontWeight: "bold", color: "#182775" }}>
+                                $140.00
+                                </Typography>
+                                <Typography sx={{ fontSize: "14px", color: "#666" }}>
+                                Wallet
+                                </Typography>
+                            </Box>
+
+                            {/* قسم Deals */}
+                            <Box sx={{ textAlign: "center", paddingLeft: "20px" }}>
+                                <Typography sx={{ fontSize: "20px", fontWeight: "bold", color: "#182775" }}>
+                                15
+                                </Typography>
+                                <Typography sx={{ fontSize: "14px", color: "#666" }}>
+                                Deals
+                                </Typography>
+                            </Box>
+                        </Box>
+    
+                        
+                        <TextField fullWidth variant="outlined" placeholder="First Name" sx={{ mb: "10px" }} InputProps={{ startAdornment: (<InputAdornment position="start"><Person sx={{ color: "#182775" }} /></InputAdornment>) }} />
+                        <TextField fullWidth variant="outlined" placeholder="Mobile Phone" sx={{ mb: "10px" }} InputProps={{ startAdornment: (<InputAdornment position="start"><Phone sx={{ color: "#182775" }} /></InputAdornment>) }} />
+                        <TextField fullWidth variant="outlined" placeholder="E-mail Address" sx={{ mb: "10px" }} InputProps={{ startAdornment: (<InputAdornment position="start"><Email sx={{ color: "#182775" }} /></InputAdornment>) }} />
+                        <TextField fullWidth variant="outlined" placeholder="Number of National ID" sx={{ mb: "10px" }} InputProps={{ startAdornment: (<InputAdornment position="start"><Badge sx={{ color: "#182775" }} /></InputAdornment>) }} />
+                        <TextField fullWidth variant="outlined" placeholder="Online Payment Card" sx={{ mb: "10px" }} InputProps={{ startAdornment: (<InputAdornment position="start"><CreditCard sx={{ color: "#182775" }} /></InputAdornment>) }} />
+                        <Button 
+                            variant="contained"  
+                            fullWidth 
+                            sx={{ backgroundColor: "#182775", "&:hover": { backgroundColor: "#0F1A4D" }, marginBottom: "10px", borderRadius:"6px", height:"50px" , textTransform:"none"}}
+                            onClick={() => alert("Notification Sent!")}
+                            >
+                            Send Notification
+                        </Button>
+
+                        <Button 
+                            variant="contained"  
+                            fullWidth 
+                            sx={{ backgroundColor: "#182775", "&:hover": { backgroundColor: "#0F1A4D" }, borderRadius:"6px", height:"50px" , textTransform:"none" }}
+                            onClick={() => alert("Starting Conversation...")}
+                            >
+                            Talk with
+                        </Button>
+                    </Box>
+                    )}
+
+                </Box>
+            ))}
         </Box>
     </Box>
     </div>
@@ -335,3 +346,6 @@ const Table = () => {
 };
 
 export default Table;
+
+
+

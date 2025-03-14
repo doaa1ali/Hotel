@@ -10,25 +10,47 @@ import image3 from "../../assets/images/image3.png";
 import image4 from "../../assets/images/image4.png";
 import image5 from "../../assets/images/image5.png";
 import image6 from "../../assets/images/image6.png";
-import Edit_image1 from "../../assets/images/Edit_image1.png";
-import Edit_image2 from "../../assets/images/Edit_image2.png";
-import Edit_image3 from "../../assets/images/Edit_image3.png";
-import Edit_image4 from "../../assets/images/Edit_image4.png";
 import { useNavigate } from "react-router-dom";
 
 const Table = () => {
 
-    const [images, setImages] = useState ([Edit_image2, Edit_image3, Edit_image4]);
+    const [files, setFiles] = useState([]); 
+    const [uploadedImage, setUploadedImage] = useState(null); 
+    const [isUploadReplaced, setIsUploadReplaced] = useState(false); 
 
+    // عند رفع صورة من المستخدم
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
-        if (file && images.length < 4) { 
+        if (file) {
             const imageUrl = URL.createObjectURL(file);
-            setImages((prevImages) => [...prevImages, imageUrl]); // إضافة الصورة الجديدة
+
+            if (files.length === 4) { 
+                setUploadedImage(imageUrl);
+                setIsUploadReplaced(true);
+            } else {
+                setFiles([...files, file]);
+            }
         }
     };
 
-    const remainingSlots = 4 - images.length;
+
+    // دالة السحب والإفلات
+    const { getRootProps, getInputProps } = useDropzone({
+        accept: "image/*",
+        multiple: true,
+        maxFiles: 5,
+        onDrop: (acceptedFiles) => {
+            const remainingSlots = 4 - files.length;
+            if (remainingSlots > 0) {
+                const newFiles = acceptedFiles.slice(0, remainingSlots);
+                setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+            } else if (!isUploadReplaced && acceptedFiles.length > 0) {
+                setUploadedImage(URL.createObjectURL(acceptedFiles[0]));
+                setIsUploadReplaced(true);
+            }
+        },
+    });
+      
 
     const navigate = useNavigate();
 
@@ -37,10 +59,10 @@ const Table = () => {
       {/* العنوان والوصف */}
       <Box sx={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "16px" }}>
         <Typography variant="h4" sx={{ fontFamily: "Poppins", fontWeight: "bold" }}>
-          Edit - Apartments
+          Add - Apartments
         </Typography>
         <Typography variant="body1" sx={{ color: "#666" }}>
-          Fill in the data to edit an apartment.
+          Fill in the data to add an apartment.
         </Typography>
       </Box>
 
@@ -51,18 +73,18 @@ const Table = () => {
             <Box sx={{ display: "flex", gap: "16px", marginBottom: "16px" }}>
                 <Box sx={{ flex: 1 , height: "50px"}}>
                 <Typography variant="subtitle1">Apartment</Typography>
-                <TextField fullWidth variant="outlined" placeholder="Name"/>
+                <TextField fullWidth variant="outlined" />
                 </Box>
                 <Box sx={{ flex: 1 }}>
                 <Typography variant="subtitle1">Building</Typography>
-                <TextField fullWidth variant="outlined" placeholder="Bulid No."/>
+                <TextField fullWidth variant="outlined" />
                 </Box>
             </Box>
 
             <Box sx={{ display: "flex", gap: "16px", marginBottom: "16px" }}>
                 <Box sx={{ flex: 1 }}>
                     <Typography variant="subtitle1">Area</Typography>
-                    <TextField fullWidth variant="outlined" placeholder="Area x" />
+                    <TextField fullWidth variant="outlined" />
                 </Box>
 
                 <Box sx={{ flex: 1 }}>
@@ -122,7 +144,7 @@ const Table = () => {
             </Box>
 
             <Box sx={{ display: "flex", alignItems: "center", gap: "16px", width:"600px" }}>
-
+            
                 <Box
                     sx={{display: "flex", alignItems: "center", padding: "20px", borderRadius: "5px", width: "200px", color: "#182775", height: "50px", backgroundColor: "#F6F8FA", fontWeight: "bold", gap: "12px", flex: 1,}}
                 > Total Salary: 5200 </Box>
@@ -146,7 +168,40 @@ const Table = () => {
             <Box sx={{ width: "100%", marginTop: "16px" }}>
                 <Box sx={{ display: "flex", alignItems: "center", gap: "20px", marginTop: "16px" }}>
                     
-                    <Box
+                    {/* صندوق الرفع أو الصورة الخامسة */}
+                    {!isUploadReplaced ? (
+                        <Box
+                            sx={{
+                                width: "500px",
+                                height: "200px",
+                                border: "none",
+                                borderRadius: "8px",
+                                backgroundColor: "#F6F8FA",
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                textAlign: "center",
+                                flexShrink: 0,
+                                cursor: "pointer"
+                            }}
+                            onClick={() => document.getElementById("fileInput").click()}
+                        >
+                            <input 
+                                type="file" 
+                                id="fileInput" 
+                                accept="image/*" 
+                                style={{ display: "none" }} 
+                                onChange={handleImageUpload} 
+                            />
+                            <ImageIcon sx={{ fontSize: 40, color: "#182775" }} />
+                            <Typography sx={{ fontWeight: "bold", color: "#182775" }}>
+                                Upload Image
+                            </Typography>
+                            <Typography variant="caption">Click to upload</Typography>
+                        </Box>
+                    ) : (
+                        <Box
                             sx={{
                                 width: "500px",
                                 height: "200px",
@@ -160,14 +215,16 @@ const Table = () => {
                             }}
                         >
                             <img
-                                src={Edit_image1}
-                                alt="Default Image 5"
+                                src={uploadedImage}
+                                alt="Uploaded"
                                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
                             />
                         </Box>
-                    {/* عرض الصور الثابتة + حقل الرفع إذا كانت أقل من 4 */}
+                    )}
+
+                    {/* عرض الصور المرفوعة */}
                     <Grid container spacing={2} sx={{ width: "270px", flexWrap: "wrap" }}>
-                        {images.map((image, index) => (
+                        {files.map((file, index) => (
                             <Grid item xs={6} key={index}>
                                 <Box
                                     sx={{
@@ -179,76 +236,70 @@ const Table = () => {
                                         display: "flex",
                                         alignItems: "center",
                                         justifyContent: "center",
-                                        backgroundColor: "#F6F8FA"
+                                        backgroundColor: "#F6F8FA",
                                     }}
                                 >
                                     <img
-                                        src={image}
-                                        alt={`default-${index}`}
+                                        src={URL.createObjectURL(file)}
+                                        alt="uploaded"
                                         style={{ width: "100%", height: "100%", objectFit: "cover" }}
                                     />
                                 </Box>
                             </Grid>
                         ))}
 
-                        {/* عرض حقول الرفع إذا كان هناك أماكن فارغة */}
-                        {[...Array(remainingSlots)].map((_, index) => (
-                            <Grid item xs={6} key={`upload-${index}`}>
+                        {/* زر إضافة صورة جديدة */}
+                        {[...Array(4 - files.length)].map((_, index) => (
+                            <Grid item xs={6} key={index}>
                                 <Box
+                                    onClick={() => document.querySelector("input[type='file']").click()}
                                     sx={{
                                         width: "124px",
                                         height: "90px",
                                         borderRadius: "8px",
-                                        border: "1px dashed #aaa",
+                                        border: "none",
                                         display: "flex",
                                         alignItems: "center",
                                         justifyContent: "center",
                                         cursor: "pointer",
                                         backgroundColor: "#F6F8FA",
-                                        position: "relative"
                                     }}
-                                    onClick={() => document.getElementById(`fileInput-${index}`).click()}
                                 >
-                                    <input 
-                                        type="file" 
-                                        id={`fileInput-${index}`} 
-                                        accept="image/*" 
-                                        style={{ display: "none" }} 
-                                        onChange={handleImageUpload} 
-                                    />
                                     <AddIcon sx={{ fontSize: 30, color: "#182775" }} />
                                 </Box>
                             </Grid>
-                        ))}  
+                        ))}
                     </Grid>
-
                 </Box>
-            </Box>
-            
 
-            <Divider sx={{ marginY: "16px" }} />
 
-            {/* الأزرار */}
-            <Box sx={{ display: "flex", justifyContent: "flex-start", gap: "16px" }}>
-                <Button 
-                    variant="contained" 
-                    sx={{ backgroundColor: "#182775", "&:hover": { backgroundColor: "#121E5B" }, textTransform: "none" }}
-                >
-                    Save
-                </Button>
-                <Button 
-                    variant="outlined"
-                    sx={{ color: "#182775", textTransform: "none" }}
-                    onClick={() => navigate("/dashboard/apartments-list")}
-                >
-                    Cancel
-                </Button>
+
+                {/* خط فاصل */}
+                <Divider sx={{ marginY: "16px" }} />
+
+                {/* الأزرار */}
+                <Box sx={{ display: "flex", justifyContent: "flex-start", gap: "16px" }}>
+                    <Button 
+                        variant="contained" 
+                        sx={{ backgroundColor: "#182775", "&:hover": { backgroundColor: "#121E5B" }, textTransform: "none" }}
+                        onClick={() => navigate("/dashboard/apartments-list")}
+                    >
+                        Add
+                    </Button>
+                    <Button 
+                        variant="outlined"
+                        sx={{ color: "#182775", textTransform: "none" }}
+                        onClick={() => navigate("/dashboard/apartments-list")}
+                    >
+                        Cancel
+                    </Button>
+                </Box>
             </Box>
 
         </Box>
 
         {/* قائمة العملاء */}
-        <Box sx={{ flex: 1, padding: "20px", backgroundColor: "#fff", borderRadius: "11px", width: "350px" }}>
+        <Box sx={{ flex: 1,  backgroundColor: "#fff", borderRadius: "11px", width: "350px" }}>
           {[image1, image2, image3, image4, image5, image6 ].map((image, index) => (
             <Box
               key={index}
@@ -266,16 +317,20 @@ const Table = () => {
                 marginBottom: "15px",
               }}
             >
-              <Avatar alt={`image${index + 1}`} src={image} sx={{ width: 73, height: 73, border: "none" }} />
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <Typography variant="h6" sx={{ fontFamily: "Poppins", fontWeight: "500", color: "#182775" }}>
-                  Client Name
-                </Typography>
-                <Box sx={{ color: "#666", fontSize: "14px", lineHeight: "1.2", fontWeight: "275" }}>
-                  <Typography>Unit Number: 023</Typography>
-                  <Typography>Rent Type: Monthly</Typography>
+              <Box sx={{ position: "relative", display: "flex", gap: 2, width: "100%", p: 2, }}>
+
+                <Avatar alt={`image${index + 1}`} src={image} sx={{ width: 73, height: 73, border: "none" }} />
+
+                <Box sx={{ display: "flex", flexDirection: "column" }}>
+                    <Typography variant="h6" sx={{ fontFamily: "Poppins", fontWeight: "500", lineHeight: "1", color: "#182775" }}>
+                        Client Name
+                    </Typography>
+                    <Box sx={{ color: "#182775", fontSize: "14px", lineHeight: "0.2", fontWeight: "275" }}>
+                        <p>Unit Number: 023</p>
+                        <p>Rent Type: Monthly</p>
+                    </Box>
                 </Box>
-              </Box>
+            </Box>
             </Box>
           ))}
         </Box>
@@ -285,10 +340,3 @@ const Table = () => {
 };
 
 export default Table;
-
-
-
-
-
-
-
