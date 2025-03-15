@@ -200,16 +200,13 @@ const Facilities = () => {
                 </TableContainer>
             </Paper>
 
-            <Divider sx={{ my: 3 }} />
 
+            <Divider sx={{ my: 3 }} />
             <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-                    <Pagination 
-                      count={Math.ceil(totalRows / rowsPerPage)} 
-                      page={page} 
-                      onChange={handlePageChange} 
-                      color="primary"
-                    />
+              <Pagination count={Math.ceil(totalRows / rowsPerPage)} page={page + 1} onChange={(_, newPage) => setPage(newPage - 1)} color="primary" />
             </Box>
+
+            
         </div>
 
     );

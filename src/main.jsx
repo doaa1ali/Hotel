@@ -2,7 +2,6 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import { createBrowserRouter, Route, RouterProvider, createRoutesFromElements, BrowserRouter as Router, Routes, } from 'react-router-dom';
-import ReactDOM from 'react-dom/client';
 
 import App from './App';
 import Login from './pages/Login';
@@ -31,9 +30,12 @@ import AddInventory from "./pages/Inventory/AddInventory";
 import EditInventory from "./pages/Inventory/EditInventory";
 //Help
 import HelpCenter from "./pages/Help/HelpCenter";
-
 //Chat
 import Chat from "./pages/Chat/ChatPage";
+//User
+import UsersStatistics from "./pages/User/UsersStatistics";
+import UserDetails from "./pages/User/UserDetails";
+import HelpRquest from "./pages/User/HelpRquest";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -75,6 +77,12 @@ const router = createBrowserRouter(
 
         {/* Chat */}
         <Route path="chat" element={<Chat />} />
+
+        {/* User */}
+        <Route path="users-statistics" element={<UsersStatistics />} />
+        <Route path="users-details" element={<UserDetails />} />
+        <Route path="users-help" element={<HelpRquest />} />
+
 
       </Route>
     </>

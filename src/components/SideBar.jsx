@@ -19,8 +19,10 @@ import star from "../assets/images/star.png";
 import staractive from "../assets/images/staractive.png"; 
 import helpactive from "../assets/images/helpactive.png"; 
 import messagetext from "../assets/images/messagetext.png"; 
+import messageactive from "../assets/images/messageactive.png"; 
 import activeVectorIcon from "../assets/images/apartactive.png"; 
 import defaultVectorIcon from "../assets/images/Vector.png"; 
+import useractive from "../assets/images/useractive.png"; 
 
 const drawerWidth = 112;
 
@@ -33,71 +35,47 @@ export default function SideBar() {
         navigate(path);
     };
 
-    const Array1 = [
-        { 
-            "icon": <BarChartOutlined style={{ 
-              backgroundColor: "#475FD9", 
-              color: "white", 
-              borderRadius: "5px", 
-              width: 28, 
-              height: 28,
-             }} />, 
-            "path": "/vector" 
-        },
-        { 
-           "icon": (
-              <div 
-              style={{  
-                  paddingBottom: "10px",
-                  width: 28,    
-                  height: 28,     
-                  display: "flex", 
-                  alignItems: "center", 
+    const menuItems = [
+        { icon: <BarChartOutlined style={{ backgroundColor: selectedItem === "/dashboard/Facilities-list" ? "#182775" : "#475FD9", color: "white", borderRadius: "5px", width:  selectedItem === "/dashboard/Facilities-list" ?  "30px" : "28px", height:  selectedItem === "/dashboard/Facilities-list" ?  "30px" : "28px"}} />, path: "/dashboard/Facilities-list" },
+        { icon: <img src={selectedItem === "/dashboard/apartments-list" ? activeVectorIcon : defaultVectorIcon} alt="Vector Icon" style={{ width: selectedItem === "/dashboard/apartments-list" ? "40px" : "28px", height: selectedItem === "/dashboard/apartments-list" ? "40px" : "28px" }} />, path: "/dashboard/apartments-list" },
+        {
+            icon: (
+              <div
+                style={{
+                  marginBottom: "10px",
+                  width: 28,
+                  height: 28,
+                  display: "flex",
+                  alignItems: "center",
                   justifyContent: "center",
-                  cursor: "pointer"
-              }}>
-                <img   
-                  src={selectedItem === "/dashboard/apartments-list" ? activeVectorIcon : defaultVectorIcon} 
-                  alt="Vector Icon" 
-                  style={{ 
-                    width: selectedItem === "/dashboard/apartments-list" ?  "40px" : "28px" ,    
-                    height: selectedItem === "/dashboard/apartments-list" ? "40px" : "28px",
-                  }} 
-              
-                />
+                  cursor: "pointer",
+                }}
+                onClick={() => setSelectedItem("/dashboard/users-statistics")}
+              >
+                {selectedItem === "/dashboard/users-statistics" ? (
+                  <img
+                    src={useractive}
+                    alt="Users Statistics Active"
+                    style={{ width: "40px", height: "40px" }}
+                  />
+                ) : (
+                  <PeopleAltOutlinedIcon style={{ color: "#475FD9" }} />
+                )}
               </div>
-              
-          ),
-
-
-            "path": "/dashboard/apartments-list"
-        },
-        { "icon": <PeopleAltOutlinedIcon style={{ color: "#475FD9" }} />, "path": "/PeopleProfile" },
-        {
-            "icon": (
-                <div style={{ 
-                    borderBottom: "3px solid #FF3333", 
-                    paddingBottom: "10px",
-                    width: 28,    
-                    height: 28,     
-                    display: "flex", 
-                    alignItems: "center", 
-                    justifyContent: "center",
-                    
-                }}>
-                    <Groups2Icon style={{ color: "#475FD9" }} />
-                </div>
             ),
-            "path": "/Groups"
-        }
-    ];
-
-    const Array2 = [
-        {
-            "icon": (
-              <div 
-                style={{ 
-                    borderBottom: selectedItem === "/dashboard/help-center" ?  "none" : "3px solid #FF3333", 
+            path: "/dashboard/users-statistics",
+          },
+          
+        { icon: <Groups2Icon style={{ color: "#475FD9", borderBottom: "3px solid #FF3333", paddingBottom: "10px" ,width: "40px", height: "40px" }} />, path: "/Groups" },
+        { icon: selectedItem === "/dashboard/help-center" ? <img src={helpactive} alt="Help Icon Active" style={{ width: "40px", height: "40px" }} /> : <LiveHelpIcon style={{ color: "#475FD9" }} />, path: "/dashboard/help-center" },
+        { icon: <NotificationImportantIcon style={{ color: "#475FD9", borderBottom: "3px solid #FF3333", paddingBottom: "10px",width: "40px", height: "40px"  }} />, path: "/notificationimportant" },
+        { icon: <img src={passwordCheck} alt="password-Check" style={{ width: 28, height: 28 }} />, path: "/Checkpassword" },
+        { icon: <img src={selectedItem === "/dashboard/inventory-list" ? boxactive : box} alt="box" style={{ width: selectedItem === "/dashboard/inventory-list" ? 40 : 28, height: selectedItem === "/dashboard/inventory-list" ? 40 : 28 }} />, path: "/dashboard/inventory-list" },
+        { icon: <img src={selectedItem === "/dashboard/reviews-apartments" ? staractive : star} alt="star" style={{ width: selectedItem === "/dashboard/reviews-apartments" ? 40 : 28, height: selectedItem === "/dashboard/reviews-apartments" ? 40 : 28 }} />, path: "/dashboard/reviews-apartments" },
+        { icon: (
+                <div 
+                style={{  
+                    borderBottom: selectedItem === "/dashboard/chat" ?  "none" : "3px solid #FF3333", 
                     paddingBottom: "10px",
                     width: 28,    
                     height: 28,     
@@ -105,115 +83,20 @@ export default function SideBar() {
                     alignItems: "center", 
                     justifyContent: "center",
                     cursor: "pointer"
-                }} 
-                  onClick={() => setSelectedItem("/dashboard/help-center")} 
-              >
-                  {selectedItem === "/dashboard/help-center" ? (
-                      <img 
-                          src={helpactive}  
-                          alt="Help Icon Active"  
-                          style={{ width: "40px", height: "40px"}} 
-                      />
-                  ) : (
-                      <LiveHelpIcon style={{ color: "#475FD9" }} />
-                  )}
-              </div>
-          
-            ),
-            "path": "/dashboard/help-center"
-        },
-        {
-            "icon": (
-                <div style={{ 
-                    borderBottom: "3px solid #FF3333", 
-                    paddingBottom: "10px",
-                    width: 28,    
-                    height: 28,     
-                    display: "flex", 
-                    alignItems: "center", 
-                    justifyContent: "center",
                 }}>
-                    <NotificationImportantIcon style={{ color: "#475FD9" }} />
-                </div>
-            ),
-            "path": "/notificationimportant"
-        },
-        {
-            "icon": (
-                <img 
-                    src={passwordCheck} 
-                    alt="password-Check" 
-                    style={{ width: 28, height: 28 }}
-                />
-            ),
-            "path": "/Checkpassword"
-        }
-    ];
-
-    const Array3 = [
-        {
-            "icon": (
-              <div 
-              style={{ 
-                  
-                  paddingBottom: "10px",
-                  width: 28,    
-                  height: 28,     
-                  display: "flex", 
-                  alignItems: "center", 
-                  justifyContent: "center",
-                  cursor: "pointer"
-              }}>
-                <img 
-                    src={selectedItem === "/dashboard/inventory-list" ? boxactive : box} 
-                    alt="box" 
+                  <img   
+                    src={selectedItem === "/dashboard/chat" ? messageactive : messagetext} 
+                    alt="Vector Icon" 
                     style={{ 
-                      width: selectedItem === "/dashboard/inventory-list" ? 40: 28, 
-                      height: selectedItem === "/dashboard/inventory-list" ? 40: 28 }}
-                />
-              </div>
-            ),
-            "path": "/dashboard/inventory-list"
-        },
-        {
-            "icon": (
-              <div 
-              style={{ 
-                  
-                  paddingBottom: "10px",
-                  width: 28,    
-                  height: 28,     
-                  display: "flex", 
-                  alignItems: "center", 
-                  justifyContent: "center",
-                  cursor: "pointer"
-              }}>
-                <img 
-                    src={selectedItem === "/dashboard/reviews-apartments" ? staractive : star } 
-                    alt="star" 
-                    style={{ 
-                      width: selectedItem === "/dashboard/reviews-apartments" ? 40: 28, 
-                      height: selectedItem === "/dashboard/reviews-apartments" ? 40: 28 }}
-                />
-              </div>
-            ),
-            "path": "/dashboard/reviews-apartments"
-        },
-        {
-            "icon": (
-                <div style={{ 
-                    display: "flex", flexDirection: "column", 
-                    alignItems: "center", borderBottom: "2px solid red", paddingBottom: "4px" 
-                }}>
-                    <img 
-                        src={messagetext} 
-                        alt="message-text" 
-                        style={{ width: 24, height: 24 }} 
-                    />
+                      width: selectedItem === "/dashboard/chat" ?  "40px" : "28px" ,    
+                      height: selectedItem === "/dashboard/chat" ? "40px" : "28px",
+                    }} 
+                
+                  />
                 </div>
             ),
             "path": "/dashboard/chat"
-        }
+        } 
     ];
 
     return (
@@ -222,47 +105,23 @@ export default function SideBar() {
                 '& .MuiDrawer-paper': {
                     width: drawerWidth,
                     boxSizing: 'border-box',
-                    position: 'fixed', 
-                    alignItems: "center", 
-                    justifyContent: "center",
-                    height: '100vh',  
-                    paddingBottom: "32px",
+                    position: 'fixed',
+                    height: '100vh',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center', 
                     paddingTop: "32px",
-                    gap: "8px",
-                },
+                }
             }}
-            variant="permanent" 
+            variant="permanent"
             anchor="left"
         >
-            <List>
-                {Array1.map((item) => (
-                    <ListItem key={item.path} disablePadding>
-                        <ListItemButton onClick={() => handleItemClick(item.path)}>
-                            <ListItemIcon>
-                                {item.icon}
-                            </ListItemIcon>
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </List>
-
-            <List style={{ gap: "18px" }}>
-                {Array2.map((item) => (
-                    <ListItem key={item.path} disablePadding>
-                        <ListItemButton onClick={() => handleItemClick(item.path)}>
-                            <ListItemIcon>
-                                {item.icon}
-                            </ListItemIcon>
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </List>
-
-            <List>
-                {Array3.map((item) => (
-                    <ListItem key={item.path} disablePadding>
-                        <ListItemButton onClick={() => handleItemClick(item.path)}>
-                            <ListItemIcon>
+            <List sx={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
+                {menuItems.map((item) => (
+                    <ListItem key={item.path} disablePadding sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+                        <ListItemButton onClick={() => handleItemClick(item.path)} sx={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%" }}>
+                            <ListItemIcon sx={{ minWidth: "unset", display: "flex", justifyContent: "center" }}>
                                 {item.icon}
                             </ListItemIcon>
                         </ListItemButton>
@@ -271,4 +130,6 @@ export default function SideBar() {
             </List>
         </Drawer>
     );
+    
 }
+

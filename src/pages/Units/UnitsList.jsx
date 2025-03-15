@@ -66,7 +66,7 @@ const ApartmentsTable = () => {
         <Button 
             variant="contained"
             sx={{ backgroundColor: "#182775", "&:hover": { backgroundColor: "#0F1A4D" }, width: "200px", height: "50px", borderRadius: "6px", textTransform: "none", display: "flex", alignItems: "center", gap: 1 }}
-            onClick={() => navigate("/dashboard/add-apartments")}
+            onClick={() => navigate("/dashboard/add-units")}
 
             >
             <IconButton sx={{ color: "white", borderRadius: "50%" }}>

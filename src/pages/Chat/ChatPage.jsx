@@ -1,22 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { Avatar, Box, TextField, IconButton, List, ListItem, ListItemAvatar, ListItemText, Paper, Typography, InputAdornment, Badge, Button } from "@mui/material";
+import { 
+  Avatar, Box, TextField, IconButton, List, ListItem, 
+  ListItemAvatar, ListItemText, Paper, Typography, 
+  InputAdornment, Badge, Button 
+} from "@mui/material";
+
 import SendIcon from "@mui/icons-material/Send";
 import SearchIcon from "@mui/icons-material/Search";
+import AttachFileIcon from "@mui/icons-material/AttachFile";  
+import MoreVertIcon from "@mui/icons-material/MoreVert";    
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import InfoIcon from "@mui/icons-material/Info";
-import ShareIcon from "@mui/icons-material/Share";
+import DoneAllIcon from "@mui/icons-material/DoneAll";
+
 
 const chatsData = [
-  { id: 1, name: "Ahmed", lastMessage: "Hello! How are you?", avatar: "https://randomuser.me/api/portraits/men/1.jpg", date: "12 Mar", time: "12:30 PM", unread: 2 },
-  { id: 2, name: "Sara", lastMessage: "See you later!", avatar: "https://randomuser.me/api/portraits/women/2.jpg", date: "Yesterday", time: "8:45 PM", unread: 0 },
-  { id: 3, name: "Omar", lastMessage: "Let's meet tomorrow.", avatar: "https://randomuser.me/api/portraits/men/3.jpg", date: "Monday", time: "5:15 PM", unread: 5 },
+  { id: 1, name: "Ahmed", lastMessage: "Apartment Name | Unit Name", avatar: "https://randomuser.me/api/portraits/men/1.jpg", date: "12 Mar", time: "12:30 PM", unread: 2 },
+  { id: 2, name: "Sara", lastMessage: "Apartment Name | Unit Name", avatar: "https://randomuser.me/api/portraits/women/2.jpg", date: "Yesterday", time: "8:45 PM", unread: 0 },
+  { id: 3, name: "Omar", lastMessage: "Apartment Name | Unit Name", avatar: "https://randomuser.me/api/portraits/men/3.jpg", date: "Monday", time: "5:15 PM", unread: 5 },
+  { id: 1, name: "Ahmed", lastMessage: "Apartment Name | Unit Name", avatar: "https://randomuser.me/api/portraits/men/1.jpg", date: "12 Mar", time: "12:30 PM", unread: 2 },
+  { id: 2, name: "Sara", lastMessage: "Apartment Name | Unit Name", avatar: "https://randomuser.me/api/portraits/women/2.jpg", date: "Yesterday", time: "8:45 PM", unread: 0 },
+  { id: 3, name: "Omar", lastMessage: "Apartment Name | Unit Name", avatar: "https://randomuser.me/api/portraits/men/3.jpg", date: "Monday", time: "5:15 PM", unread: 5 },
 ];
 
 const Chat = () => {
   const [selectedChat, setSelectedChat] = useState(chatsData[0]);
   const [chatMessages, setChatMessages] = useState({
-    1: [{ text: "Hello!", sender: "me" }, { text: "How are you?", sender: "other" }],
+    1: [{ text: "Hello!", sender: "me" }, { text: "Hello! Finally found the time to write to you I need your help in creating interactive animations for my mobile application.", sender: "other" }],
     2: [{ text: "Hey there!", sender: "me" }, { text: "See you later!", sender: "other" }],
     3: [{ text: "Let's meet tomorrow.", sender: "me" }],
   });
@@ -62,16 +72,16 @@ const Chat = () => {
   );
 
   return (
-    <Box display="flex" height="100vh">
+    <Box display="flex" height="100%" sx={{ gap: 2 }}>
       {/* قائمة المحادثات */}
-      <Paper elevation={3} sx={{ width: "30%", p: 2, display: "flex", flexDirection: "column" }}>
+      <Paper elevation={3} sx={{ width: "450px", p: 2, display: "flex", flexDirection: "column", border: "1px solid #ccc" , borderRadius: "8px",height:"100%", }}>
         {/* شريط البحث */}
         <TextField
           variant="outlined"
           placeholder="Search chats..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          sx={{ mb: 2 }}
+          sx={{ mb: 2 , }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -82,68 +92,149 @@ const Chat = () => {
         />
 
         {/* قائمة الدردشة */}
-        <List sx={{ flex: 1, overflowY: "auto" }}>
-          {filteredChats.length > 0 ? (
-            filteredChats.map((chat) => (
-              <ListItem
-                key={chat.id}
-                button
-                onClick={() => handleSelectChat(chat)}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  backgroundColor: chat.unread > 0 ? "#f0f0f0" : "transparent",
-                  fontWeight: chat.unread > 0 ? "bold" : "normal",
-                }}
-              >
-                <ListItemAvatar>
-                  <Avatar src={chat.avatar} />
-                </ListItemAvatar>
-                <ListItemText primary={chat.name} secondary={chat.lastMessage} />
-                <Box sx={{ textAlign: "right", ml: 1 }}>
-                  <Typography variant="body2" color="textSecondary">{chat.date}</Typography>
-                  <Typography variant="caption" color="textSecondary">{chat.time}</Typography>
-                </Box>
-                {chat.unread > 0 && (
-                  <Badge badgeContent={chat.unread} color="error" sx={{ ml: 2 }}>
-                    <NotificationsIcon />
-                  </Badge>
-                )}
+        <List sx={{ flex: 1, overflowY: "none", height:"100%" }}>
+            {filteredChats.length > 0 ? (
+              filteredChats.map((chat) => (
+                <ListItem
+                  key={chat.id}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    backgroundColor: chat.unread > 0 ? "#F6F8FA" : "transparent",
+                    fontWeight: chat.unread > 0 ? "bold" : "normal",
+                    marginBottom: 1,
+                    padding: "10px",
+                    borderRadius: "8px",
+                    border: "1px solid #ddd",
+                    position: "relative",
+                    
+                  }}
+                >
+              {/* الصورة مع علامة "نشط الآن" */}
+              <ListItemAvatar sx={{ position: "relative" }}>
+                <Avatar src={chat.avatar} sx={{ width: "54px", height: "54px" }} />
+
+                {/* الدائرة الخضراء لعلامة "نشط الآن" */}
+                <Box
+                  sx={{
+                    width: "12px",
+                    height: "12px",
+                    backgroundColor: "#00AB1D",
+                    borderRadius: "50%",
+                    position: "absolute",
+                    bottom: "3px",
+                    right: "3px",
+                    border: "2px solid white",
+
+                  }}
+                />
+              </ListItemAvatar>
+
+              {/* الاسم + الرسائل مع الدائرة الصغيرة بجوار الاسم */}
+              <ListItemText
+                primary={
+                  <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                    <Typography sx={{ fontWeight: "bold", marginRight:"8px" }}>{chat.name}</Typography>
+
+                    <Badge
+                      badgeContent={5}
+                      color="success"
+                      sx={{
+                        "& .MuiBadge-badge": {
+                          minWidth: "16px",
+                          height: "16px",
+                          borderRadius: "50%",
+                          fontSize: "10px",
+                          fontWeight: "bold",
+                          padding: "5px"
+                        }
+                      }}
+                    />
+                  </Box>
+                }
+                secondary={
+                  <>
+                    <Typography variant="body2" color="textSecondary">
+                      {chat.lastMessage}
+                    </Typography>
+                    <Typography variant="body2" color="#00AB1D">
+                      Sample with client text here.....
+                    </Typography>
+                  </>
+                }
+                sx={{ flex: 1, ml: 2 }}
+              />
+
+              {/* التاريخ والوقت فوق الزر */}
+              <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <Typography variant="body2" color="textSecondary">
+                  {chat.date} | {chat.time}
+                </Typography>
+
                 {/* زر الذهاب للبروفايل */}
-                <Button 
-                  variant="contained" 
-                  color="primary" 
-                  endIcon={<ArrowForwardIcon />} 
-                  onClick={() => alert(`فتح بروفايل ${chat.name}`)} 
-                  sx={{ ml: 2 }}
+                <Button
+                  variant="contained"
+                  endIcon={<ArrowForwardIcon />}
+                  onClick={() => alert(`فتح بروفايل ${chat.name}`)}
+                  sx={{ textTransform: "none", backgroundColor: "#182775", color: "white", mt: 1 }}
                 >
                   Profile
                 </Button>
-              </ListItem>
-            ))
-          ) : (
-            <Typography color="textSecondary" sx={{ textAlign: "center", mt: 2 }}>
-              No chats found
-            </Typography>
-          )}
+              </Box>
+            </ListItem>
+          ))
+        ) : (
+          <Typography color="textSecondary" sx={{ textAlign: "center", mt: 2 }}>
+            No chats found
+          </Typography>
+        )}
         </List>
+
+
       </Paper>
 
       {/* منطقة الدردشة */}
       <Box flex={1} display="flex" flexDirection="column" p={2} component={Paper} elevation={3}>
-         <Box p={2} display="flex" alignItems="center" justifyContent="space-between" bgcolor="primary.main" color="white">
-          <Box display="flex" alignItems="center">
-            <Avatar src={selectedChat.avatar} />
-            <Box ml={2}>{selectedChat.name}</Box>
+         <Box p={2} display="flex" alignItems="center" justifyContent="space-between" sx={{ backgroundColor:"#F6F8FA", color:"#333333"}}>
+         <Box display="flex" alignItems="center" sx={{ gap: 2 }}>
+          {/* الصورة مع علامة "نشط الآن" */}
+          <Box sx={{ position: "relative" }}>
+            <Avatar src={selectedChat.avatar} sx={{ width: 56, height: 56 }} />
+
+            {/* الدائرة الخضراء لعلامة "نشط الآن" */}
+            <Box
+              sx={{
+                width: 12,
+                height: 12,
+                backgroundColor: "#00AB1D",
+                borderRadius: "50%",
+                position: "absolute",
+                bottom: 3,
+                right: 3,
+                border: "2px solid white",
+              }}
+            />
           </Box>
+
           <Box>
-            <IconButton color="inherit" onClick={() => alert("عرض التفاصيل")}> 
-              <InfoIcon />
-            </IconButton>
-            <IconButton color="inherit" onClick={() => alert("مشاركة المحادثة")}> 
-              <ShareIcon />
-            </IconButton>
+            <Typography variant="body1" fontWeight="bold">{selectedChat.name}</Typography>
+            <Typography variant="body2" color="textSecondary">last seen today at 1:00 PM</Typography>
           </Box>
+        </Box>
+
+        <Box>
+ 
+          <IconButton color="inherit" onClick={() => alert("إرفاق ملف")}>
+            <AttachFileIcon />
+          </IconButton>
+
+    
+          <IconButton color="inherit" onClick={() => alert("فتح القائمة")}>
+            <MoreVertIcon />
+          </IconButton>
+        </Box>
+
         </Box>
 
         {/* الرسائل */}
@@ -152,18 +243,40 @@ const Chat = () => {
             <Box
               key={index}
               sx={{
-                alignSelf: msg.sender === "me" ? "flex-end" : "flex-start",
-                bgcolor: msg.sender === "me" ? "primary.light" : "grey.300",
-                color: msg.sender === "me" ? "white" : "black",
-                p: 1,
-                borderRadius: 1,
-                maxWidth: "70%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: msg.sender === "me" ? "flex-end" : "flex-start",
                 mb: 1,
               }}
             >
-              {msg.text}
+              {/* صورة المستلم (في الرسائل المستلمة فقط) */}
+              {msg.sender !== "me" && (
+                <Avatar src={selectedChat.avatar} sx={{ width: 36, height: 36, mr: 1 }} />
+              )}
+
+              {/* محتوى الرسالة */}
+              <Box
+                sx={{
+                  bgcolor: msg.sender === "me" ? "#DCF8C6" : "#FFF",
+                  color: "black",
+                  p: 1,
+                  borderRadius: "10px",
+                  maxWidth: "70%",
+                  position: "relative",
+                }}
+              >
+                {msg.text}
+
+                {msg.sender === "me" && (
+                  <DoneAllIcon sx={{ fontSize: 16, color: "#34B7F1", position: "absolute", bottom: -3, right: 5 }} />
+                )}
             </Box>
-          ))}
+
+            {msg.sender === "me" && (
+              <Avatar src={"my-avatar-url.jpg"} sx={{ width: 36, height: 36, ml: 1 }} />
+            )}
+            </Box>
+            ))}
         </Box>
 
         {/* إدخال الرسائل */}

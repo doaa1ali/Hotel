@@ -24,9 +24,9 @@ const ApartmentsTable = () => {
                 <Box sx={{ display: "flex", gap: 2 }}>
                     <h1
                     style={{
-                    fontSize: "22px",
+                    fontSize: "32px",
                     cursor: "pointer",
-                    color:  "#182775" 
+                    color:  "#333" 
                     }}
                     >
                         Inventory

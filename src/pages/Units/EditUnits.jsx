@@ -253,55 +253,62 @@ const Table = () => {
         <Box sx={{ flex: 1, padding: "20px", backgroundColor: "#fff", borderRadius: "11px", width: "350px" }}>
             {clients.map((client, index) => (
                 <Box key={index}>
-                <Box
-                    onClick={() => setSelectedIndex(index === selectedIndex ? null : index)}
-                    sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    padding: "20px",
-                    borderRadius: "5px",
-                    width: "100%",
-                    height: "105px",
-                    backgroundColor: selectedIndex === index ? "#182775" : "#F6F8FA",
-                    color: selectedIndex === index ? "#FFFFFF" : "#182775",
-                    gap: "12px",
-                    marginBottom: "15px",
-                    cursor: "pointer",
-                    transition: "all 0.3s ease",
-                    }}
-                >
-                    <Avatar alt={client.name} src={client.image} sx={{ width: 73, height: 73, border: "none" }} />
-                    <Box sx={{ display: "flex", flexDirection: "column" }}>
-                        <Typography variant="h6" sx={{ fontFamily: "Poppins", fontWeight: "500" }}>
-                            Client Name
-                        </Typography>
-                        <Box sx={{
-                            color:selectedIndex === index ? "#FFFFFF" : "#666",
-                             fontSize: "14px", lineHeight: "0.2", fontWeight: "275" }}>
-                            <p>Unit Number: 023</p>
-                            <p>Rent Type: Monthly</p>
+                    <Box
+                        onClick={() => setSelectedIndex(index === selectedIndex ? null : index)}
+                        sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        padding: "20px",
+                        borderRadius: "5px",
+                        width: "100%",
+                        height: "105px",
+                        backgroundColor: selectedIndex === index ? "#182775" : "#F6F8FA",
+                        color: selectedIndex === index ? "#FFFFFF" : "#182775",
+                        gap: "12px",
+                        marginBottom: "15px",
+                        cursor: "pointer",
+                        transition: "all 0.3s ease",
+                        }}
+                    >
+                        <Avatar alt={client.name} src={client.image} sx={{ width: 73, height: 73, border: "none" }} />
+                        <Box sx={{ display: "flex", flexDirection: "column" }}>
+                            <Typography variant="h6" sx={{ fontFamily: "Poppins", fontWeight: "500" }}>
+                                Client Name
+                            </Typography>
+                            <Box sx={{
+                                color:selectedIndex === index ? "#FFFFFF" : "#666",
+                                fontSize: "14px", lineHeight: "0.2", fontWeight: "275" }}>
+                                <p>Unit Number: 023</p>
+                                <p>Rent Type: Monthly</p>
+                            </Box>
                         </Box>
-                    </Box>
 
-                </Box>
+                    </Box>
 
                 {/* عرض الحقول عند الضغط */}
                 {selectedIndex === index && (
-                    <Box sx={{  backgroundColor: "#FFFFFF", borderRadius: "8px",  width:"100%" , marginBottom:"12px"}}>
+                    <Box sx={{  backgroundColor: "#FFFFFF", borderRadius: "8px",  width:"100%" , marginBottom:"12px", }}>
 
-                        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "20px", marginBottom: "15px" , border: "1px solid #ccc",  borderRadius: "6px", padding:"10px", height:"50px"}}>
+                        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "20px", marginBottom: "15px" , border: "1px solid #ccc", height:"63px", borderRadius: "6px", padding:"10px", }}>
                             {/* قسم Wallet */}
-                            <Box sx={{ textAlign: "center", paddingRight: "20px", borderRight: "2px solid #182775" }}>
+                            <Box sx={{ textAlign: "center", paddingRight: "20px",}}>
                                 <Typography sx={{ fontSize: "20px", fontWeight: "bold", color: "#182775" }}>
-                                $140.00
+                                    $140.00
                                 </Typography>
                                 <Typography sx={{ fontSize: "14px", color: "#666" }}>
-                                Wallet
+                                    Wallet
                                 </Typography>
                             </Box>
 
+                            <Box sx={{ textAlign: "center",  }}>
+                                <Typography sx={{ fontSize: "30px", fontWeight: "bold", color: "#182775" }}>
+                                    |
+                                </Typography>
+                                
+                            </Box>
+
                             {/* قسم Deals */}
-                            <Box sx={{ textAlign: "center", paddingLeft: "20px" }}>
+                            <Box sx={{ textAlign: "center", paddingLeft: "20px" ,}}>
                                 <Typography sx={{ fontSize: "20px", fontWeight: "bold", color: "#182775" }}>
                                 15
                                 </Typography>
