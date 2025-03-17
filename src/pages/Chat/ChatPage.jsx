@@ -106,7 +106,6 @@ const Chat = () => {
                     primary={
                       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                         <Typography sx={{ fontWeight: "bold" }}>{chat.name}</Typography>
-                        {/* 🟢 دائرة بعدد الرسائل غير المقروءة */}
                         <Box sx={{
                           width: "20px",
                           height: "20px",

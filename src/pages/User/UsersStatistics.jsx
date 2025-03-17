@@ -219,7 +219,7 @@ const Users = () => {
                                                 <ListItemIcon><Visibility fontSize="small" /></ListItemIcon>
                                                 Overview
                                             </MenuItem>
-                                            <MenuItem onClick={() => navigate("/dashboard/users-help")}>
+                                            <MenuItem onClick={() => navigate("/dashboard/users-pending")}>
                                                 <ListItemIcon><HelpOutline fontSize="small" /></ListItemIcon>
                                                 Help Request
                                             </MenuItem>

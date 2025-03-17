@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaDollarSign, FaMoneyBillWave, FaBuilding, FaBriefcase } from "react-icons/fa";
 import { Edit, Delete, Visibility, Add, Tune } from "@mui/icons-material"; 
-import { Box, Button, IconButton, Divider, Pagination,Typography,Table, TableHead, TableRow, TableCell, TableBody, TableContainer,TablePagination, Paper, Typography} from "@mui/material";
+import { Box, Button, IconButton, Divider, Pagination,Typography,Table, TableHead, TableRow, TableCell, TableBody, TableContainer,TablePagination, Paper} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate} from "react-router-dom";
 import Icon1 from "../../assets/images/icon1.png";

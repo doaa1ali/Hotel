@@ -36,7 +36,9 @@ import Chat from "./pages/Chat/ChatPage";
 //User
 import UsersStatistics from "./pages/User/UsersStatistics";
 import UserDetails from "./pages/User/UserDetails";
-import HelpRquest from "./pages/User/HelpRquest";
+import HelpPending from "./pages/User/HelpPending";
+import HelpActive from "./pages/User/HelpActive";
+import HelpDone from "./pages/User/HelpDone";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -83,7 +85,9 @@ const router = createBrowserRouter(
         {/* User */}
         <Route path="users-statistics" element={<UsersStatistics />} />
         <Route path="users-details" element={<UserDetails />} />
-        <Route path="users-help" element={<HelpRquest />} />
+        <Route path="users-pending" element={<HelpPending />} />
+        <Route path="users-active" element={<HelpActive />} />
+        <Route path="users-done" element={<HelpDone />} />
 
 
       </Route>
