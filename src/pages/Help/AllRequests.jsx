@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
 import { Box, Paper, Table as MuiTable, TableHead, TableRow, TableCell, TableBody, TableContainer, Divider, Pagination } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const ApartmentsTable = () => {
   const navigate = useNavigate();
-  const { register, watch } = useForm();
-  const searchQuery = watch("search", "");
+  const location = useLocation();
 
   const [page, setPage] = useState(0);
-  const [selectedFilter, setSelectedFilter] = useState("All");
   const rowsPerPage = 18;
   const totalRows = 100;
 
@@ -25,7 +22,6 @@ const ApartmentsTable = () => {
     ArriveTime: "2:15 Pm",
     DoneTime: "2:15 Pm",
     Pending: "2:15 Pm",
-    category: i % 2 === 0 ? "Maintenance" : "Facility Care",
   }));
 
   const menuItems = [
@@ -35,19 +31,9 @@ const ApartmentsTable = () => {
     { name: "Users (1256)", path: "/dashboard/users", filter: "Users" },
   ];
 
-  const handleFilterChange = (filter, path) => {
-    setSelectedFilter(filter);
-    setPage(0); 
-    navigate(path);
-  };
-
-  const filteredData = data.filter(item => 
-    (selectedFilter === "All" || item.category === selectedFilter) &&
-    item.ReqSender.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
   return (
-    <div style={{ padding: "20px", minHeight: "100vh" }}>
+    <div style={{ padding: "20px" , minHeight: "100vh" }}>
+      {/* Tabs */}
       <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "50px", mb: 2 }}>
         <Box sx={{ display: "flex", gap: 2 }}>
           {menuItems.map((item, index) => (
@@ -56,11 +42,13 @@ const ApartmentsTable = () => {
                 style={{
                   fontSize: "22px",
                   cursor: "pointer",
-                  color: selectedFilter === item.filter ? "#182775" : "#8594E6",
-                  borderBottom: selectedFilter === item.filter ? "2px solid #182775" : "none",
+                  color: location.pathname === item.path ? "#182775" : "#8594E6",
+                  borderBottom: location.pathname === item.path ? "2px solid #182775" : "#8594E6",
                   transition: "color 0.3s ease"
                 }}
-                onClick={() => handleFilterChange(item.filter, item.path)}
+                onClick={() => navigate(item.path)}
+                onMouseEnter={(e) => (e.target.style.color = "#182775")}
+                onMouseLeave={(e) => (e.target.style.color = location.pathname === item.path ? "#182775" : "#8594E6")}
               >
                 {item.name}
               </h1>
@@ -70,6 +58,7 @@ const ApartmentsTable = () => {
         </Box>
       </Box>
 
+      {/* Search Box */}
       <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}>
         <Box
           sx={{
@@ -86,7 +75,6 @@ const ApartmentsTable = () => {
         >
           <SearchIcon sx={{ color: "#475FD9", mr: 1 }} />
           <input
-            {...register("search")}
             type="text"
             placeholder="Search Apartments Name..."
             style={{
@@ -103,11 +91,12 @@ const ApartmentsTable = () => {
         </Box>
       </Box>
 
-      <Paper sx={{ width: "100%", overflow: "hidden", mt: 3 }}>
+      {/* Table */}
+      <Paper sx={{ width: "100%", overflow: "hidden", mt: 3 ,}}>
         <TableContainer>
           <MuiTable>
             <TableHead>
-              <TableRow sx={{ backgroundColor: "#C2CAF2" }}>
+              <TableRow sx={{ backgroundColor: "#C2CAF2"}}>
                 {["ReqSender", "UnitNo", "Status", "ReqTime", "Employee", "AcceptTime", "ArriveTime", "DoneTime", "Pending"].map((col, index) => (
                   <TableCell key={index} sx={{ textAlign: "center", fontSize: "12px", color: "#182775" }}>
                     {col}
@@ -115,29 +104,32 @@ const ApartmentsTable = () => {
                 ))}
               </TableRow>
             </TableHead>
+
             <TableBody>
-              {filteredData.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={9} style={{ textAlign: "center", color: "red" }}>
-                    No data found
-                  </TableCell>
+              {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
+                <TableRow key={row.id} sx={{ borderBottom: "1px solid #ddd" }}>
+                  <TableCell sx={{ textAlign: "center", color: index === 0 ? "#1C9FE2" : "#182775" }}>{row.ReqSender}</TableCell>
+                  <TableCell sx={{ textAlign: "center", color: index === 0 ? "#1C9FE2" : "#182775" }}>{row.UnitNo}</TableCell>
+                  <TableCell sx={{ textAlign: "center", color: index === 0 ? "#1C9FE2" : "#182775" }}>{row.Status}</TableCell>
+                  <TableCell sx={{ textAlign: "center", color: index === 0 ? "#1C9FE2" : "#182775" }}>{row.ReqTime}</TableCell>
+                  <TableCell sx={{ textAlign: "center", color: index === 0 ? "#1C9FE2" : "#182775" }}>{row.Employee}</TableCell>
+                  <TableCell sx={{ textAlign: "center", color: index === 0 ? "#1C9FE2" : "#182775" }}>{row.AcceptTime}</TableCell>
+                  <TableCell sx={{ textAlign: "center", color: index === 0 ? "#1C9FE2" : "#182775" }}>{row.ArriveTime}</TableCell>
+                  <TableCell sx={{ textAlign: "center", color: index === 0 ? "#1C9FE2" : "#182775" }}>{row.DoneTime}</TableCell>
+                  <TableCell sx={{ textAlign: "center", color: index === 0 ? "#1C9FE2" : "#182775" }}>{row.Pending}</TableCell>
                 </TableRow>
-              ) : (
-                filteredData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
-                  <TableRow key={row.id} sx={{ borderBottom: "1px solid #ddd" }}>
-                    {Object.values(row).slice(1, 10).map((value, idx) => (
-                      <TableCell key={idx} sx={{ textAlign: "center", color: "#182775" }}>{value}</TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              )}
+              ))}
             </TableBody>
+
+
           </MuiTable>
         </TableContainer>
       </Paper>
+
+      {/* Pagination */}
       <Divider sx={{ my: 3 }} />
       <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-        <Pagination count={Math.ceil(filteredData.length / rowsPerPage)} page={page + 1} onChange={(_, newPage) => setPage(newPage - 1)} color="primary" />
+        <Pagination count={Math.ceil(totalRows / rowsPerPage)} page={page + 1} onChange={(_, newPage) => setPage(newPage - 1)} color="primary" />
       </Box>
     </div>
   );
