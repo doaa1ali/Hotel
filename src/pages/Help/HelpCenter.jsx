@@ -75,22 +75,26 @@ const Facilities = () => {
     >
       {cards.map((card) => (
         <Box
-          key={card.id}
-          onClick={() => setSelectedCard(card.id)}
-          sx={{
-            width: "290px",
-            height: "150px",
-            borderRadius: "10px",
-            backgroundColor: selectedCard === card.id ? "#182775" : "#F6F8FA",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            transition: "background 0.3s ease-in-out",
-            boxShadow: selectedCard === card.id ? "0px 4px 10px rgba(0, 0, 0, 0.1)" : "none",
-          }}
-        >
+        key={card.id}
+        onClick={() => {
+          setSelectedCard(card.id);
+          navigate("/dashboard/help-requests");
+        }}
+        sx={{
+          width: "290px",
+          height: "150px",
+          borderRadius: "10px",
+          backgroundColor: selectedCard === card.id ? "#182775" : "#F6F8FA",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
+          transition: "background 0.3s ease-in-out",
+          boxShadow: selectedCard === card.id ? "0px 4px 10px rgba(0, 0, 0, 0.1)" : "none",
+        }}
+      >
+      
         <Typography
             variant="body1"
             sx={{
