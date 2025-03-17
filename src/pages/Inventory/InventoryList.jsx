@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Edit, Delete, Add, Tune,Visibility } from "@mui/icons-material";
-import { Box, Button, IconButton, Divider, Pagination,  Table as MuiTable, TableHead, TableRow, TableCell, TableBody, TableContainer, Paper} from "@mui/material";
+import { Box, Button, IconButton, Divider, Pagination,  Table as MuiTable, TableHead, TableRow, TableCell, TableBody, TableContainer, Paper,Typography} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate, useLocation } from "react-router-dom";
 import Inventory1 from "../../assets/images/inventory1.png"; 
@@ -22,15 +22,10 @@ const ApartmentsTable = () => {
 
          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "50px", mb: 2 }}>
                 <Box sx={{ display: "flex", gap: 2 }}>
-                    <h1
-                    style={{
-                    fontSize: "32px",
-                    cursor: "pointer",
-                    color:  "#333" 
-                    }}
-                    >
-                        Inventory
-                    </h1> 
+                  <Typography variant="h4" sx={{ fontFamily: "Poppins", fontWeight: "500", fontSize: "32px", color:"#333333" }}>
+                      Inventory
+                  </Typography>
+                        
                 </Box>
         
                 <Button 

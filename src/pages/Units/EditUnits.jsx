@@ -38,10 +38,10 @@ const Table = () => {
     <div style={{ padding: "16px" }}>
       {/* العنوان والوصف */}
       <Box sx={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "16px" }}>
-        <Typography variant="h4" sx={{ fontFamily: "Poppins", fontWeight: "bold" }}>
+        <Typography variant="h4" sx={{ fontFamily: "Poppins", fontWeight: "500", fontSize: "32px", color:"#333333"  }}>
           Edit - Units
         </Typography>
-        <Typography variant="body1" sx={{ color: "#666" }}>
+        <Typography variant="body1" sx={{  color: "#5C5C5C",fontFamily: "Poppins", fontWeight: "200", fontSize: "20px", }}>
           Fill in the data to edit an apartment.
         </Typography>
       </Box>

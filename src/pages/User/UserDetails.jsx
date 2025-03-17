@@ -41,7 +41,7 @@ const User = () => {
         <Box sx={{ display: "flex", gap: "40px",marginBottom:"30px" }}>
             <Box sx={{ borderRadius: "10px",border:"1px solid #ddd", backgroundColor: "#fff", width:"450px",padding: "32px", }}>
                 <Box sx={{  backgroundColor: "#fff", width: "100%" }}>
-                    <Typography variant="h4" sx={{ fontFamily: "Poppins", fontWeight: "bold", width: "100%" }}>
+                    <Typography variant="h4" sx={{ fontFamily: "Poppins", fontWeight: "500", fontSize: "24px", color:"#333333"  }}>
                         User Details
                     </Typography>
                     <Divider sx={{ marginY: "16px" }} />
@@ -148,7 +148,7 @@ const User = () => {
 
             <Box sx={{ borderRadius: "10px",border:"1px solid #ddd", backgroundColor: "#fff", width:"750px",padding: "32px", }}>
                 <Box sx={{  backgroundColor: "#fff", width: "100%" }}>
-                    <Typography variant="h4" sx={{ fontFamily: "Poppins", fontWeight: "bold", width: "100%" }}>
+                    <Typography variant="h4" sx={{ fontFamily: "Poppins", fontWeight: "500", fontSize: "24px", color:"#333333" }}>
                         Saved List
                     </Typography>
 

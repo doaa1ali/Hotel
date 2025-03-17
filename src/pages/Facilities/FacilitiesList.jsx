@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaDollarSign, FaMoneyBillWave, FaBuilding, FaBriefcase } from "react-icons/fa";
 import { Edit, Delete, Visibility, Add, Tune } from "@mui/icons-material"; 
-import { Box, Button, IconButton, Divider, Pagination,Typography,Table, TableHead, TableRow, TableCell, TableBody, TableContainer,TablePagination, Paper, } from "@mui/material";
+import { Box, Button, IconButton, Divider, Pagination,Typography,Table, TableHead, TableRow, TableCell, TableBody, TableContainer,TablePagination, Paper, Typography} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate} from "react-router-dom";
 import Icon1 from "../../assets/images/icon1.png";
@@ -44,15 +44,10 @@ const Facilities = () => {
 
             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "65px", width:"100%", lineHeight:"100%", marginBottom:"12px" }}>
                 <Box sx={{ display: "flex", gap: 2 }}>
-                    <h1
-                        style={{
-                        fontSize: "32px",
-                        cursor: "pointer",
-                        color: "#333",
-                        }}
-                    >
+                    <Typography variant="h4" sx={{ fontFamily: "Poppins", fontWeight: "500", fontSize: "32px", color:"#333333" }}>
                         Utilities cost
-                    </h1> 
+                    </Typography>
+  
                 </Box>
                 <Box sx={{ width: "300px",height:"65px",display: "flex",gap: "12px",border: "1px solid #ddd", borderRadius: "8px",padding: "12px 16px",justifyContent: "space-around", backgroundColor: "#FFFFFF",}} >
                     {["Day", "Monthly", "Yearly"].map((tab) => (
