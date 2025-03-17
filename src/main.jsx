@@ -31,6 +31,9 @@ import EditInventory from "./pages/Inventory/EditInventory";
 //Help
 import HelpCenter from "./pages/Help/HelpCenter";
 import AllRequests from "./pages/Help/AllRequests";
+import Maintenance from "./pages/Help/Maintenance";
+import FacilityCare from "./pages/Help/FacilityCare";
+import Users from "./pages/Help/Users";
 //Chat
 import Chat from "./pages/Chat/ChatPage";
 //User
@@ -78,6 +81,9 @@ const router = createBrowserRouter(
         {/* Help */}
         <Route path="help-center" element={<HelpCenter />} />
         <Route path="help-requests" element={<AllRequests />} />
+        <Route path="maintenance" element={<Maintenance />} />
+        <Route path="help-facility" element={<FacilityCare />} />
+        <Route path="users" element={<Users />} />
 
         {/* Chat */}
         <Route path="chat" element={<Chat />} />
